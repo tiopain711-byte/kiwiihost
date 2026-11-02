@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d18">
+<title>kiwiihost · PS4 13.52</title>
+<style>
+:root {
+  --site-primary: #182b4b;
+  --site-secondary: #101b30;
+  --site-background: #080d18;
+  --site-on-primary: #f4f8ff;
+  --site-on-secondary: #d8e4f8;
+  --site-on-background: #edf3ff;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Inter, ui-sans-serif, system-ui, sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  color-scheme: dark light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); }
+#app { min-height: 100vh; width: 100%; border-radius: 0; background: var(--site-background); overflow: hidden; }
+header { background: var(--site-primary); color: var(--site-on-primary); padding: calc(22px * var(--site-spacing-scale)) max(20px, calc((100vw - 1100px)/2)); border-bottom: 1px solid #31496d; }
+.topline { display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.brand { display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.08em; }
+.logo { width:38px;height:38px;border-radius:12px;background:#3b82f6;display:grid;place-items:center;font-size:19px;box-shadow:0 0 24px #3b82f655; }
+.version { font-size:11px; letter-spacing:.12em; color:#a9c8f5; border:1px solid #49658b; padding:6px 9px; border-radius:999px; }
+.hero { max-width:1100px; margin:0 auto; padding:34px 20px 25px; }
+.eyebrow { color:#73b5ff; font-size:11px; letter-spacing:.2em; font-weight:800; }
+h1 { font-family:var(--site-font-heading);font-size:calc(34px * var(--site-heading-scale)); margin:10px 0 8px; letter-spacing:-.04em; }
+.sub { color:#a8b7cd; max-width:650px; line-height:1.6; font-size:14px; }
+main { max-width:1100px; margin:0 auto; padding:0 20px 40px; }
+.grid { display:grid;grid-template-columns:1.2fr .8fr;gap:16px; }
+.panel { background:var(--site-secondary); border:1px solid #25354e; border-radius:calc(17px * var(--site-radius-scale)); padding:calc(20px * var(--site-spacing-scale)); box-shadow:0 12px 35px #0002; }
+.panel h2 { font-size:15px; margin:0 0 17px; letter-spacing:.02em; }
+.statusline { display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-top:1px solid #27364d; }
+.statusline:first-of-type { border-top:0; }
+.muted { color:#91a2bb;font-size:12px; }
+.value { font-size:13px;font-weight:700; }
+.pill { display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:6px 10px;background:#142f2c;color:#6ee7b7;font-size:11px;font-weight:800; }
+.dot { width:7px;height:7px;background:#34d399;border-radius:50%; }
+.firmware { display:flex;align-items:end;justify-content:space-between;gap:15px;margin:8px 0 18px; }
+.fw { font-size:42px;font-weight:850;letter-spacing:-.06em; }
+.fw small { display:block;font-size:10px;letter-spacing:.18em;color:#91a2bb;font-weight:700; }
+select,button { font:inherit; }
+select { color:#eaf2ff;background:#0b1424;border:1px solid #354967;border-radius:10px;padding:10px 12px; }
+button { border:0;border-radius:11px;padding:12px 15px;background:#3b82f6;color:white;font-weight:800;cursor:pointer;transition:.15s; }
+button:hover { filter:brightness(1.12);transform:translateY(-1px); }
+button.secondary { background:#20314b;color:#dceaff;border:1px solid #344966; }
+button:disabled { opacity:.45;cursor:not-allowed;transform:none; }
+.actions { display:flex;flex-wrap:wrap;gap:9px;margin-top:14px; }
+.notice { margin-top:15px;border:1px solid #6b5127;background:#2a2114;color:#f5d79a;padding:12px 13px;border-radius:11px;font-size:12px;line-height:1.55; }
+.tabs { display:flex;gap:7px;flex-wrap:wrap;margin:20px 0 13px; }
+.tab { background:transparent;border:1px solid #30415b;color:#aebed4;padding:9px 13px;border-radius:9px;font-size:12px; }
+.tab.active { background:#1e3b64;color:#fff;border-color:#4778b5; }
+.payloads { display:grid;grid-template-columns:repeat(3,1fr);gap:12px; }
+.payload { background:#0b1424;border:1px solid #273a56;border-radius:13px;padding:15px;min-height:125px; }
+.payload strong { display:block;font-size:13px;margin:8px 0 5px; }
+.payload p { color:#94a7c2;font-size:11px;line-height:1.45;margin:0; }
+.tag { color:#78b7ff;font-size:10px;font-weight:800;letter-spacing:.12em; }
+.log { background:#050a12;border:1px solid #1e2c41;border-radius:11px;padding:13px;color:#9bb2ce;font:11px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;min-height:100px;white-space:pre-wrap; }
+footer { max-width:1100px;margin:0 auto;padding:0 20px 30px;color:#71839d;font-size:11px;line-height:1.6; }
+.hidden { display:none; }
+@media(max-width:760px){.grid{grid-template-columns:1fr}.payloads{grid-template-columns:1fr}.hero{padding-top:26px}h1{font-size:29px}.fw{font-size:36px}}
+</style>
+</head>
+<body>
+<div id="app">
+<header><div class="topline"><div class="brand"><div class="logo">K</div><div>kiwiihost</div></div><div class="version">INDEPENDENT PROJECT · 0.1 PREVIEW</div></div></header>
+<section class="hero"><div class="eyebrow">CONSOLE WEB EXPLOIT INTERFACE</div><h1>Seu host. Seu controle.</h1><div class="sub">Painel independente para organizar o acesso ao host do PS4, com foco no firmware 13.52. A interface está em prévia; a cadeia de exploit e os payloads ainda precisam ser integrados e validados.</div></section>
+<main>
+<div class="grid">
+<section class="panel"><h2>PAINEL DO SISTEMA</h2><div class="firmware"><div class="fw">13.52<small>FIRMWARE ALVO</small></div><span class="pill"><i class="dot"></i> ALVO CONFIGURADO</span></div>
+<div class="statusline"><span class="muted">Console detectado</span><span class="value" id="device">Aguardando navegador PS4</span></div>
+<div class="statusline"><span class="muted">Compatibilidade</span><span class="value">Exploit público documentado</span></div>
+<div class="statusline"><span class="muted">GoldHEN</span><span class="value">2.4b18.11 · indicado para 13.52</span></div>
+<div class="statusline"><span class="muted">Estado da execução</span><span class="value" id="runstate">Não iniciado</span></div>
+<div class="actions"><button id="detect">Verificar navegador</button><button class="secondary" id="cache">Preparar cache (demonstração)</button></div>
+<div class="notice"><strong>Atenção:</strong> esta prévia não executa jailbreak. O botão de execução ficará indisponível até a integração dos arquivos de exploit corretos e a validação no hardware.</div>
+</section>
+<section class="panel"><h2>CONFIGURAÇÃO</h2><div class="statusline"><span class="muted">Versão do sistema</span><strong class="value">13.52</strong></div>
+<div class="statusline"><span class="muted">HEN preferido</span><select id="hen"><option>GoldHEN 2.4b18.11</option><option>PS4HEN</option></select></div>
+<div class="statusline"><span class="muted">Tentativas automáticas</span><select id="tries"><option>Manual</option><option>Até 2 tentativas</option><option>Até 3 tentativas</option></select></div>
+<div class="statusline"><span class="muted">Idioma</span><strong class="value">Português (Brasil)</strong></div>
+<div class="statusline"><span class="muted">Cache local</span><strong class="value" id="cachestate">Não preparado</strong></div>
+</section>
+</div>
+<div class="tabs"><button class="tab active" data-tab="payloads">Payloads</button><button class="tab" data-tab="diagnostics">Diagnóstico</button><button class="tab" data-tab="about">Sobre</button></div>
+<section class="panel" id="payloads"><h2>PAYLOADS DISPONÍVEIS PARA CONFIGURAÇÃO</h2><div class="payloads">
+<div class="payload"><span class="tag">HEN</span><strong>GoldHEN</strong><p>Payload principal selecionado para firmware 13.52. Requer binário compatível e cadeia de exploit integrada.</p></div>
+<div class="payload"><span class="tag">TOOLS</span><strong>PS4Debug</strong><p>Ferramenta de diagnóstico e depuração. Não será carregada até confirmar compatibilidade.</p></div>
+<div class="payload"><span class="tag">TOOLS</span><strong>FTP / Bin Loader</strong><p>Utilitários para transferência e carregamento de payloads após o HEN.</p></div>
+</div></section>
+<section class="panel hidden" id="diagnostics"><h2>LOG DE DIAGNÓSTICO</h2><div class="log" id="log">[host] Interface carregada.
+[host] Firmware-alvo: 13.52
+[host] Runtime de exploit: ainda não integrado.
+[host] Nenhuma ação foi executada no console.</div></section>
+<section class="panel hidden" id="about"><h2>SOBRE ESTE PROJETO</h2><p class="muted" style="line-height:1.7">PS4 WebHost é um projeto independente de interface e organização. O código de exploit, offsets, binários e payloads devem manter os créditos e licenças dos respectivos desenvolvedores. GitHub Pages hospeda arquivos estáticos; não fornece servidor de execução no console.</p><p class="muted">Próxima etapa: integrar uma cadeia pública verificada para 13.52, conferir licenças e testar no PS4 Slim antes de publicar como host operacional.</p></section>
+</main>
+<footer>Use somente em console próprio e mantenha cópias de segurança. Exploits podem falhar, travar o navegador ou reiniciar o console. O jailbreak não é persistente após reinicialização completa.</footer>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+function log(msg){const el=$('#log');el.textContent += `\n${msg}`;}
+$('#detect').addEventListener('click',()=>{const ua=navigator.userAgent;$('#device').textContent=/PlayStation 4/i.test(ua)?'Navegador PS4 detectado':'Navegador não identificado como PS4';log('[diagnóstico] '+$('#device').textContent);});
+$('#cache').addEventListener('click',()=>{if('serviceWorker' in navigator){$('#cachestate').textContent='Prévia: sem runtime';}else{$('#cachestate').textContent='Não disponível nesta prévia';}log('[cache] Demonstração visual; nenhum exploit foi armazenado.');});
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));btn.classList.add('active');['payloads','diagnostics','about'].forEach(id=>$('#'+id).classList.toggle('hidden',id!==btn.dataset.tab));}));
+</script>
+</body>
+</html>
